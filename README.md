@@ -298,6 +298,32 @@ LANGFUSE_SECRET_KEY = "sk-..."
 
 **Cloud option:** Set `LANGFUSE_HOST` to `https://cloud.langfuse.com` and use your cloud API keys instead.
 
+### MLflow Observability
+
+MLflow provides experiment tracking and metrics logging for LLM calls, agent steps, and research runs.
+
+**Enable MLflow (local server):**
+
+```bash
+# Start a local MLflow tracking server
+mlflow server --host 0.0.0.0 --port 5000
+```
+
+**Configure in `config/settings.py`:**
+
+```python
+MLFLOW_TRACKING_URI = "http://localhost:5000"
+MLFLOW_EXPERIMENT_NAME = "investment_research"
+```
+
+**What gets tracked:**
+- **Research runs** — Each workflow execution logs the question, LLM model, embedding model, status, and custom metrics (task count, findings count, review cycles)
+- **Agent steps** — Each agent (Planner, Researcher, RiskAnalyst, Writer, Reviewer) logs duration and status
+- **LLM calls** — Every `call_llm` invocation logs model, prompt length, response length, duration, and agent name
+- **Embedding calls** — Each `get_embedding` call logs model, text length, and duration
+
+All logs create nested runs under the configured experiment. Disabled by default — set `MLFLOW_TRACKING_URI` to activate.
+
 ---
 
 ## API Endpoints
