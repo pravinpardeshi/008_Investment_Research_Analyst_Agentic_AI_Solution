@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Research Analyst</title>
+    <link rel="icon" type="image/x-icon" href="/static/images/favicon.ico">
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-inner">
+            <a href="/" class="navbar-brand">
+                <img src="/static/images/favicon.ico" alt="">
+                <span>InvestResearch</span>
+            </a>
+            <div class="navbar-status" id="health-status">
+                <span class="status-dot" id="health-dot"></span>
+                <span id="health-text">Checking...</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Investment Research Analyst</h1>
+            <p>Upload company documents and generate AI-powered investment research reports — entirely local.</p>
+        </div>
+
+        <div class="grid-2col">
+            <section class="card">
+                <div class="card-header">
+                    <h2><span class="icon">&#128196;</span> Upload Documents</h2>
+                    <span class="badge">PDF &middot; DOCX &middot; TXT</span>
+                </div>
+                <form id="upload-form" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="file">Document</label>
+                        <input type="file" id="file" name="file" accept=".pdf,.docx,.txt" required>
+                        <div class="file-hint">Annual reports, quarterly filings, earnings transcripts, investor presentations</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="company">Company Name <span style="color:var(--text-muted);font-weight:400">(optional)</span></label>
+                        <input type="text" id="company" name="company" placeholder="e.g. RBC, TD Bank">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Upload &amp; Index</button>
+                    </div>
+                </form>
+                <div id="upload-status"></div>
+            </section>
+
+            <section class="card">
+                <div class="card-header">
+                    <h2><span class="icon">&#128269;</span> Research Question</h2>
+                </div>
+                <form id="research-form">
+                    <div class="form-group">
+                        <label for="question">What would you like to research?</label>
+                        <textarea id="question" name="question" rows="4" placeholder="e.g. Compare RBC and TD Bank as long-term investments." required></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">Start Research</button>
+                        <button type="button" class="btn btn-secondary" id="async-research-btn" onclick="startAsyncResearch()">Start Async &rarr;</button>
+                    </div>
+                </form>
+                <div id="research-status"></div>
+                <div id="agent-timeline" style="display:none;margin-top:16px;"></div>
+            </section>
+        </div>
+
+        <section class="card collapsible" style="margin-top:24px;">
+            <div class="card-header" onclick="toggleCollapse('documents-section')" style="cursor:pointer;">
+                <h2><span class="icon">&#128193;</span> Uploaded Documents</h2>
+                <span style="display:flex;align-items:center;gap:8px;">
+                    <span class="badge" id="documents-count">0</span>
+                    <span class="collapse-icon" id="documents-icon">&#9660;</span>
+                </span>
+            </div>
+            <div id="documents-section" class="collapse-content">
+                <div id="documents-list">
+                    <div class="empty-state">
+                        <div class="empty-icon">&#128196;</div>
+                        <p>No documents uploaded yet.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="card collapsible" style="margin-top:24px;">
+            <div class="card-header" onclick="toggleCollapse('history-section')" style="cursor:pointer;">
+                <h2><span class="icon">&#128203;</span> Research History</h2>
+                <span style="display:flex;align-items:center;gap:8px;">
+                    <span class="badge" id="history-count">0</span>
+                    <span class="collapse-icon" id="history-icon">&#9660;</span>
+                </span>
+            </div>
+            <div id="history-section" class="collapse-content">
+                <div id="recent-reports">
+                    <div class="empty-state">
+                        <div class="empty-icon">&#128202;</div>
+                        <p>No reports yet. Upload documents and start a research inquiry.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Investment Research Analyst &mdash; Local-first, AI-powered research</p>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
